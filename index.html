@@ -1498,6 +1498,7 @@ p.nominalBounds = new cjs.Rectangle(-1692.5,-628.3,2932,1353);
 		hangarCross.addEventListener('click', function () {
 			if (hangarCross.clickable) {
 				btnSFX.play();
+				hospitalCross.clickable = false;
 				musicBG.canBePlayed = true;
 				musicBG.play();
 				build.hand.visible = false;
@@ -1516,6 +1517,7 @@ p.nominalBounds = new cjs.Rectangle(-1692.5,-628.3,2932,1353);
 		hospitalCross.addEventListener('click', function () {
 			if (hospitalCross.clickable) {
 				btnSFX.play();
+				hangarCross.clickable = false;
 				musicBG.canBePlayed = true;
 				musicBG.play();
 				build.hand.visible = false;
@@ -1533,6 +1535,7 @@ p.nominalBounds = new cjs.Rectangle(-1692.5,-628.3,2932,1353);
 		});
 		function buildHangar() {
 			build_btn.build_btn.hand.visible = false;
+			hospitalCross.clickable = true;
 			if (build_btn.clickable && hangar.currentFrame <= 1) {
 				hangar.gotoAndPlay(1);
 				build_btn.gotoAndPlay(15);
@@ -1541,6 +1544,7 @@ p.nominalBounds = new cjs.Rectangle(-1692.5,-628.3,2932,1353);
 		}
 		function buildHospital() {
 			build_btn.build_btn.hand.visible = false;
+			hangarCross.clickable = true;
 			if (build_btn.clickable && hospital.currentFrame <= 1) {
 				hospital.gotoAndPlay(1);
 				build_btn.gotoAndPlay(15);
@@ -1724,8 +1728,8 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"index_atlas_P_.png?1675152872570", id:"index_atlas_P_"},
-		{src:"index_atlas_NP_.jpg?1675152872570", id:"index_atlas_NP_"}
+		{src:"index_atlas_P_.png?1675154051672", id:"index_atlas_P_"},
+		{src:"index_atlas_NP_.jpg?1675154051672", id:"index_atlas_NP_"}
 	],
 	preloads: []
 };
@@ -1811,7 +1815,7 @@ function handleComplete(evt,comp) {
 	//Code to support hidpi screens and responsive scaling.
 	function makeResponsive(isResp, respDim, isScale, scaleType) {		
 		var lastW, lastH, lastS=1;		
-	function resizeCanvas() {			
+		function resizeCanvas() {			
 			var w = lib.properties.width, h = lib.properties.height;			
 			var iw = window.innerWidth, ih=window.innerHeight;			
 			var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
