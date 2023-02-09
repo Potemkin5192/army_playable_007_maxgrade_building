@@ -1738,30 +1738,6 @@ p.nominalBounds = new cjs.Rectangle(-1692.5,-628.3,2932,1353);
 				}
 			}
 		}
-		
-		if (mraid.getState() === 'loading') {
-			mraid.addEventListener('ready', onSdkReady);
-		} else {
-			onSdkReady();
-		}
-		function onSdkReady() {
-			// Wait for the ad to become viewable for the first time
-			if (mraid.isViewable()) {
-				showMyAd();
-			} else {
-				mraid.addEventListener('viewableChange',
-					function (viewable) {
-						if (viewable) {
-							mraid.removeEventListener('viewableChange', arguments.callee);
-							showMyAd();
-						}
-					});
-			}
-		}
-		function showMyAd() {
-			musicBG.canBePlayed = true;
-			musicBG.play();
-		}
 	}
 	// actions tween:
 	this.timeline.addTween(cjs.Tween.get(this).wait(1).call(this.frame_1).wait(1));
@@ -1904,10 +1880,26 @@ function handleComplete(evt,comp) {
 	AdobeAn.compositionLoaded(lib.properties.id);
 	fnStartAnimation();
 }
+function viewableChangeHandler(viewable) {
+// start/pause/resume gameplay, stop/play sounds
+	if(viewable) {
+		init();
+	} else {
+	 // pause
+		mraid.unload()
+	}
+}
+function onSdkReady() {
+	mraid.addEventListener('viewableChange', viewableChangeHandler);
+	// Wait for the ad to become viewable for the first time
+	if (mraid.isViewable()) {
+	 init();
+	}
+}
 </script>
 <!-- write your code here -->
 </head>
-<body onload="init();" style="margin:0px;">
+<body onload="onSdkReady();" style="margin:0px;">
 	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:100%; height:100%">
 		<canvas id="canvas" width="100%" height="100%" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
 		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:100%; height:100%; position: absolute; left: 0px; top: 0px; display: block;">
